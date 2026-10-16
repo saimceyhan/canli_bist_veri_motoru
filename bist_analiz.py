@@ -5,6 +5,7 @@ def canli_bist_veri_motoru(hisse_adi, zaman_dilimi):
         intervals = {
             "Günlük": Interval.INTERVAL_1_DAY,
             "4 Saatlik": Interval.INTERVAL_4_HOURS,
+            "2 Saatlik": Interval.INTERVAL_2_HOURS,
             "Haftalık": Interval.INTERVAL_1_WEEK
         }
         
@@ -19,7 +20,7 @@ def canli_bist_veri_motoru(hisse_adi, zaman_dilimi):
         ind = analysis.indicators
         summary = analysis.summary
 
-        # --- PINE SCRIPT (SMI-ALMA-V11) STRATEJİ HESAPLAMALARI ---
+        # --- PINE SCRIPT (SMI-ALMA-V11) HESAPLAMALARI ---
         smi_degeri = ind.get("Stoch.K", 0.0)
         smi_signal = ind.get("Stoch.D", 0.0)
         smi_vwma = ind.get("VWMA", 0.0)
@@ -53,11 +54,9 @@ def canli_bist_veri_motoru(hisse_adi, zaman_dilimi):
             "signal": smi_signal,
             "vwma": smi_vwma,
             "smi_yonu": smi_yonu,
-            "k1": k1, "k2": k2, "k3": k3, "k4": k4,
             "al_sinyali": al_sinyali,
             "sat_sinyali": sat_sinyali,
             "tv_ozet": summary.get("RECOMMENDATION", "NÖTR"),
-            # Ham Gösterge Paketleri
             "oscillators_summary": analysis.oscillators if analysis.oscillators else {"RECOMMENDATION": "-", "BUY": 0, "SELL": 0, "NEUTRAL": 0},
             "moving_averages_summary": analysis.moving_averages if analysis.moving_averages else {"RECOMMENDATION": "-", "BUY": 0, "SELL": 0, "NEUTRAL": 0},
             "summary_all": summary if summary else {"RECOMMENDATION": "-", "BUY": 0, "SELL": 0, "NEUTRAL": 0},
