@@ -47,7 +47,6 @@ def borsa_uygulama_paneli():
         st.header("📊 BIST 100 Canlı Gösterge Çarşaf Listesi")
         st.caption(f"Periyot: {periyot} | Detayları görmek istediğiniz hissenin kutusuna tıklayarak verileri anlık yükleyebilirsiniz.")
         
-        # 📌 AKORDEON SİSTEMİ: İstek yığılmasını önler, tıklanan hisseyi anlık çeker
         for hisse in BIST100:
             with st.expander(f"📈 BIST:{hisse} - Teknik Verileri Göster"):
                 veri = canli_bist_veri_motoru(hisse, periyot)
@@ -85,8 +84,10 @@ def borsa_uygulama_paneli():
 
                     with t_col2:
                         st.markdown("⚙️ **Hareketli Ortalamalar**")
-                        ma_names = ["EMA 10", "SMA 10", "EMA 20", "SMA 20", "EMA 50", "SMA 50", "EMA 100", "SMA 100", "EMA 200", "SMA 200", "Ichimoku Ana Hattı", "VWMA (20)"]
-                        ma_vals = [fmt(ind.get("EMA10")), fmt(ind.get("SMA10")), fmt(ind.get("EMA20")), fmt(ind.get("SMA20")), fmt(ind.get("EMA50")), fmt(ind.get("SMA50")), fmt(ind.get("EMA100")), fmt(ind.get("SMA100")), fmt(ind.get("EMA200")), fmt(ind.get("SMA200")), fmt(ind.get("Ichimoku.BLine")), fmt(ind.get("VWMA"))]
+                        # 🔥 KESİN DÜZELTME: ma_names listesi ile altındaki listelerin uzunluğu tam olarak 14 adet olarak eşitlendi!
+                        ma_names = ["EMA 10", "SMA 10", "EMA 20", "SMA 20", "EMA 30", "SMA 30", "EMA 50", "SMA 50", "EMA 100", "SMA 100", "EMA 200", "SMA 200", "Ichimoku Ana Hattı", "VWMA (20)"]
+                        ma_vals = [fmt(ind.get("EMA10")), fmt(ind.get("SMA10")), fmt(ind.get("EMA20")), fmt(ind.get("SMA20")), fmt(ind.get("EMA30")), fmt(ind.get("SMA30")), fmt(ind.get("EMA50")), fmt(ind.get("SMA50")), fmt(ind.get("EMA100")), fmt(ind.get("SMA100")), fmt(ind.get("EMA200")), fmt(ind.get("SMA200")), fmt(ind.get("Ichimoku.BLine")), fmt(ind.get("VWMA"))]
+                        
                         def calc_ma(v): return "Al" if v and canli_fiyat > v else "Sat" if v else "Nötr"
                         ma_acts = [calc_ma(ind.get("EMA10")), calc_ma(ind.get("SMA10")), calc_ma(ind.get("EMA20")), calc_ma(ind.get("SMA20")), calc_ma(ind.get("EMA30")), calc_ma(ind.get("SMA30")), calc_ma(ind.get("EMA50")), calc_ma(ind.get("SMA50")), calc_ma(ind.get("EMA100")), calc_ma(ind.get("SMA100")), calc_ma(ind.get("EMA200")), calc_ma(ind.get("SMA200")), "Nötr", calc_ma(ind.get("VWMA"))]
                         st.table(pd.DataFrame({"Adı": ma_names, "Değer": ma_vals, "İşlem detayı": ma_acts}))
