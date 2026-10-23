@@ -1,2 +1,6 @@
 streamlit
-tradingview-ta
+pandas
+numpy
+websocket-client
+requests
+git+https://github.com/rongardF/tvdatafeed.git
